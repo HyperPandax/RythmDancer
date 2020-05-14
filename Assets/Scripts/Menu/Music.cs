@@ -6,7 +6,7 @@ public class Music : MonoBehaviour{
     public string songpath;
 
     void Awake(){
-        songpath = " E:/..workSpace/Jaar3/Periode4/KICK PUNCH SOUND EFFECTS.mp3";
+        songpath = "";
         DontDestroyOnLoad(this.gameObject);
     }
 }
