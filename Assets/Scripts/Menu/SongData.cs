@@ -8,7 +8,7 @@ public class SongData{
     public string[] urls;
     public string[] titles;
     public int amountsongs;
-    //public float BPM;
+    public int BPM;
 
     //public bool played;
     //public float score;

@@ -34,8 +34,10 @@ public class SongSelected : MonoBehaviour{
         AudioSource ST = songTransfer.GetComponent<AudioSource>();
         ST.clip = audioSelected.clip;
 
-        bpm = UniBpmAnalyzer.AnalyzeBpm(ST.clip);
-        Debug.Log("BPM is " + bpm);
+        Text bpmText = selectedSong.transform.GetChild(1).GetComponent<Text>();
+        string bpmm = bpmText.text;
+        int.TryParse(bpmm, out bpm);//UniBpmAnalyzer.AnalyzeBpm(ST.clip);
+        //Debug.Log("BPM is " + bpm);
         
         someScript = songTransfer.GetComponent<Music>();
         someScript.bpm = bpm;

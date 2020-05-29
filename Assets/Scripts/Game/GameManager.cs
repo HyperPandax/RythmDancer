@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour{
         hitNotes++;
         score += scorePerNote;
         combo++;
-
+        soundEffect.Play();
         BS.startstopwatch = false;
     }
     public void NoteMis(){

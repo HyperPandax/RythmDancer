@@ -8366,7 +8366,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d463eee267a7c6c4b835e2b9e0ee5e30, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f4f0d100d77d3734d9b73d4320091b6b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -11050,7 +11050,7 @@ MonoBehaviour:
   scoreText: {fileID: 552810352}
   healthText: {fileID: 1799015365}
   theMusic: {fileID: 1391292176}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 1494487592}
   startPlaying: 0
   BS: {fileID: 1579753271}
 --- !u!4 &2015882027

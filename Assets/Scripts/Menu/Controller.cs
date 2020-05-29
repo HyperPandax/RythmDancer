@@ -16,6 +16,7 @@ public class Controller : MonoBehaviour
     [SerializeField]
     private LoadInSaveFile loadInSaveFile;
     public string url, songName;
+    public int BPM;
     
     private List<AudioSource> savedSongsAudio;
     private List<string> savedUrls, savedTitles;
@@ -24,6 +25,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private GameObject songListContainer;
     private GameObject songbutton;
     private Text title;
+    private Text bpm;
 
     private List<string> allImportedSongNames = new List<string>();
 
@@ -55,12 +57,16 @@ public class Controller : MonoBehaviour
     public void importSong2(){
         songListContainer = GameObject.FindGameObjectWithTag("ContentList");
         songbutton = Resources.Load<GameObject>("Prefabs/Song");
-        title = songbutton.GetComponentInChildren<Text>();
+        title = songbutton.transform.GetChild(0).GetComponentInChildren<Text>();
+        bpm = songbutton.transform.GetChild(1).GetComponentInChildren<Text>();
 
         AudioSource audio = songbutton.GetComponent<AudioSource>();
 
         audio.clip = theMusic.clip;
         title.text = songName;
+
+        BPM = UniBpmAnalyzer.AnalyzeBpm(audio.clip);
+        bpm.text = "bpm: " + BPM;
 
         if (allImportedSongNames.Contains(title.text))
         {
@@ -104,13 +110,15 @@ public class Controller : MonoBehaviour
         public void importload(int num){
             songListContainer = GameObject.FindGameObjectWithTag("ContentList");
             songbutton = Resources.Load<GameObject>("Prefabs/Song");
-            title = songbutton.GetComponentInChildren<Text>();
+            title = songbutton.transform.GetChild(0).GetComponent<Text>();
+            bpm = songbutton.transform.GetChild(1).GetComponent<Text>();
 
             AudioSource audio = songbutton.GetComponent<AudioSource>();
 
             audio.clip = theMusic.clip;
             title.text = savedTitles[num];
-
+            BPM = UniBpmAnalyzer.AnalyzeBpm(audio.clip);
+            bpm.text = /*"bpm: " +*/ BPM.ToString();
            
 
         if (allImportedSongNames.Contains(title.text)){
