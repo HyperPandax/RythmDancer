@@ -25,21 +25,28 @@ public class GameManager : MonoBehaviour{
     private int amountNotes;
 
     [SerializeField] private GameObject theMusic;
+    //[SerializeField] private GameObject theMusicSilent;
     [SerializeField] private AudioSource soundEffect;
-    [SerializeField] bool startPlaying;
+    [SerializeField] bool startPlaying = true;
     [SerializeField] BeatScroller BS;
 
     public static GameManager instance;
 
     GameObject songInput;
     AudioSource songclip;
+    //AudioSource songclipSilent;
     //Music songInputPath;
-
+    
 
 
     // Start is called before the first frame update
     void Start(){
         theMusic = GameObject.Find("TransferSong");
+        BS._beatTempo = theMusic.GetComponent<Music>().bpm;
+        //theMusicSilent = GameObject.Find("Music");
+
+        //theMusicSilent.GetComponent<AudioSource>().clip = theMusic.GetComponent<AudioSource>().clip;
+        //theMusicSilent.GetComponent<AudioSource>().time = 10;//theMusicSilent.GetComponent<AudioSource>().clip.length * .5f;
         
 
         instance = this;
@@ -65,10 +72,14 @@ public class GameManager : MonoBehaviour{
             if (Input.anyKeyDown){
                 startPlaying = true;
                 BS.setHasStarted(true);
+
+                //songclipSilent = theMusicSilent.GetComponent<AudioSource>();
                 songclip = theMusic.GetComponent<AudioSource>();
+                //songclipSilent.Play();
                 songclip.Play();
             }
         }
+        
 
         comboText.text = ("Combo: " + combo);
         scoreText.text = ("Score: " + score);
@@ -80,6 +91,8 @@ public class GameManager : MonoBehaviour{
         hitNotes++;
         score += scorePerNote;
         combo++;
+
+        BS.startstopwatch = false;
     }
     public void NoteMis(){
         print("Note mis");
@@ -91,7 +104,13 @@ public class GameManager : MonoBehaviour{
     public void loadscene(int sceneindex)
     {
         songclip.Pause();
+        //SceneManager.UnloadSceneAsync(1);
+        //SceneManager.LoadScene(sceneindex);
+
+        Destroy(GameObject.Find("TransferSong"));
+        SceneManager.LoadScene(sceneindex, LoadSceneMode.Single);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneindex));
         SceneManager.UnloadSceneAsync(1);
-        SceneManager.LoadScene(sceneindex);
+       
     }
 }

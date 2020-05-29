@@ -16,12 +16,10 @@ public class Controller : MonoBehaviour
     [SerializeField]
     private LoadInSaveFile loadInSaveFile;
     public string url, songName;
-
-
+    
     private List<AudioSource> savedSongsAudio;
     private List<string> savedUrls, savedTitles;
-    
-    
+        
     //gameobjects for instanciating
     [SerializeField] private GameObject songListContainer;
     private GameObject songbutton;
@@ -113,7 +111,9 @@ public class Controller : MonoBehaviour
             audio.clip = theMusic.clip;
             title.text = savedTitles[num];
 
-            if (allImportedSongNames.Contains(title.text)){
+           
+
+        if (allImportedSongNames.Contains(title.text)){
                 print("double " + title.text);
             }
             else{

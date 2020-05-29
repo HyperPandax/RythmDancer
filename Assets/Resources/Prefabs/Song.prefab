@@ -325,3 +325,4 @@ MonoBehaviour:
   todestroy: 1
   selectedSong: {fileID: 0}
   songTransfer: {fileID: 0}
+  bpm: 0

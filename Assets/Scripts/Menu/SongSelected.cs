@@ -11,8 +11,11 @@ public class SongSelected : MonoBehaviour{
     public GameObject selectedSong;
     private AudioSource audioSelected;
     public GameObject songTransfer;
+    public int bpm;
 
-    public void selectSong(){ 
+    private Music someScript;
+
+    public void selectSong() {
         //get pressed button GO
         selectedSong = EventSystem.current.currentSelectedGameObject;
         print(selectedSong);
@@ -31,6 +34,11 @@ public class SongSelected : MonoBehaviour{
         AudioSource ST = songTransfer.GetComponent<AudioSource>();
         ST.clip = audioSelected.clip;
 
-    }
+        bpm = UniBpmAnalyzer.AnalyzeBpm(ST.clip);
+        Debug.Log("BPM is " + bpm);
+        
+        someScript = songTransfer.GetComponent<Music>();
+        someScript.bpm = bpm;
 
+    }
 }
