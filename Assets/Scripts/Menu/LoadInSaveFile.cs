@@ -46,9 +46,9 @@ public class LoadInSaveFile : MonoBehaviour{
         if (!titles.Contains(title)) {  titles.Add(title);  }
         if (!urls.Contains(url)) { urls.Add(url); }
         
-        /*score.Add(0);
+        score.Add(0);
         hitNotes.Add(0);
-        missedNotes.Add(0);*/
+        missedNotes.Add(0);
 
         SaveSongs();
     }
@@ -58,7 +58,7 @@ public class LoadInSaveFile : MonoBehaviour{
         print(title);
         if (titles.Contains(title)) { titles.Remove(title); }
         if (urls.Contains(url)) { urls.Remove(url); }
-
+        
         //if (playedSongs.Contains(songnum)) { playedSongs.Remove(songnum); }
 
         SaveSongs();
@@ -66,10 +66,10 @@ public class LoadInSaveFile : MonoBehaviour{
     public void SongPlayed(int songnum)
     {
         print("Songplayed");
-        if (!playedSongs.Contains(songnum)) { playedSongs.Add(songnum); } else
+        /*if (!playedSongs.Contains(songnum)) { playedSongs.Add(songnum); } else
         {
             playedSongs.Add(0);
-        }
+        }*/
         // addscore
 
         SaveSongs();

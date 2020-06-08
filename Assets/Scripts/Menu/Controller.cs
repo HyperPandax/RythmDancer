@@ -38,8 +38,16 @@ public class Controller : MonoBehaviour
     }
     private void Update()
     {
-        RectTransform rectTransform = spinner.GetComponent<RectTransform>();
-        rectTransform.Rotate(new Vector3(0, 0, -45));
+        if (savedUrls.Count != 0)
+        {
+            RectTransform rectTransform = spinner.GetComponent<RectTransform>();
+            rectTransform.Rotate(new Vector3(0, 0, -45));
+        }
+        else
+        {
+            spinner.SetActive(false);
+        }
+       
     }
 
     #region browserimport

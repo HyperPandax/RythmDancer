@@ -36,9 +36,9 @@ public class SongData{
         urls = new string[save.urls.Count];
 
         playedSongs = new int[save.playedSongs.Count];
-        score = new int[save.amountSongs];
-        hitNotes = new int[save.amountSongs];
-        missedNotes = new int[save.amountSongs];
+        score = new int[save.score.Count];
+        hitNotes = new int[save.hitNotes.Count];
+        missedNotes = new int[save.missedNotes.Count];
 
         amountsongs = save.amountSongs;
 
@@ -53,17 +53,47 @@ public class SongData{
         for (var i = 0; i < save.urls.Count; i++) {
             urls[i] = save.urls[i];
         }
+
+        /*if (save.playedSongs[0] != null)
+        {
+            for (var i = 0; i < save.playedSongs.Count; i++)
+            {
+                playedSongs[i] = save.playedSongs[i];
+                Debug.Log("playedSongs: " + playedSongs[i]);
+            }
+        }*/
+
+
+        if (save.score[0] != null)
+        {
+            for (var i = 0; i < save.score.Count; i++)
+            {
+                score[i] = save.score[i];
+                Debug.Log("score: " + score[i]);
+            }
+        }
+        if (save.hitNotes[0] != null)
+        {
+            for (var i = 0; i < save.hitNotes.Count; i++)
+            {
+                hitNotes[i] = save.hitNotes[i];
+                Debug.Log("hitNotes: " + hitNotes[i]);
+            }
+        }
+        if (save.missedNotes[0] != null)
+        {
+            for (var i = 0; i < save.missedNotes.Count; i++)
+            {
+                missedNotes[i] = save.missedNotes[i];
+                Debug.Log("missedNotes: " + missedNotes[i]);
+            }
+        }
         /*for (var i = 0; i < save.playedSongs.Count; i++)
         {
             playedSongs[i] = save.playedSongs[i];
             Debug.Log("playedSongs: " + playedSongs[i]);
-        }
-        for (var i = 0; i < save.score.Count; i++)
-        {
-            score[i] = save.score[i];
-            Debug.Log("score: " + score[i]);
-        }
-        for (var i = 0; i < save.hitNotes.Count; i++)
+        }*/
+        /*for (var i = 0; i < save.hitNotes.Count; i++)
         {
             if(hitNotes[i] != null)
             {
