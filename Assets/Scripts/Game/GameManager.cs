@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+using UnityEngine.EventSystems;
+
 using System.IO;
 using UnityEngine.Networking;
 
@@ -20,9 +22,12 @@ public class GameManager : MonoBehaviour{
 
     private int scorePerNote;
 
+    private int missedNotes;
     private int hitNotes;
 
     private int amountNotes;
+
+    public static GameManager instance;
 
     [SerializeField] private GameObject theMusic;
     //[SerializeField] private GameObject theMusicSilent;
@@ -30,56 +35,48 @@ public class GameManager : MonoBehaviour{
     [SerializeField] bool startPlaying = true;
     [SerializeField] BeatScroller BS;
 
-    public static GameManager instance;
-
     GameObject songInput;
-    AudioSource songclip;
-    //AudioSource songclipSilent;
-    //Music songInputPath;
-    
+    public AudioSource songclip;
+
+    [SerializeField] GameObject buttonToPause, pauseScreen;
+   
 
 
     // Start is called before the first frame update
     void Start(){
+        print("constructor GameManager");
         theMusic = GameObject.Find("TransferSong");
-        BS._beatTempo = theMusic.GetComponent<Music>().bpm;
-        //theMusicSilent = GameObject.Find("Music");
-
-        //theMusicSilent.GetComponent<AudioSource>().clip = theMusic.GetComponent<AudioSource>().clip;
-        //theMusicSilent.GetComponent<AudioSource>().time = 10;//theMusicSilent.GetComponent<AudioSource>().clip.length * .5f;
+        //BS._beatTempo = theMusic.GetComponent<Music>().bpm;
+        songclip = theMusic.GetComponent<AudioSource>();
+        //BS.songLength = songclip.clip.length;
         
-
         instance = this;
         combo = 0;
         score = 0;
         health = 100;
         hitNotes = 0;
+        missedNotes = 0;
+
 
         comboText.text = ("Combo: " + combo);
         scoreText.text = ("Score: " + score);
         healthText.text = ("Health: " + health);
 
-        //print("music length:" + theMusic.clip.length);
-
         amountNotes = GameObject.FindGameObjectsWithTag("Note").Length;
-        print("amountNotes:" + amountNotes);
         scorePerNote = 10000/amountNotes;
+
+        startPlaying = true;
+        BS.setHasStarted(true);
+        songclip.Play();
     }
 
     // Update is called once per frame
     void Update(){
-        if (!startPlaying) {
-            if (Input.anyKeyDown){
-                startPlaying = true;
-                BS.setHasStarted(true);
-
-                //songclipSilent = theMusicSilent.GetComponent<AudioSource>();
-                songclip = theMusic.GetComponent<AudioSource>();
-                //songclipSilent.Play();
-                songclip.Play();
-            }
+       
+        if (!songclip.isPlaying)
+        {
+            endGame();
         }
-        
 
         comboText.text = ("Combo: " + combo);
         scoreText.text = ("Score: " + score);
@@ -92,11 +89,11 @@ public class GameManager : MonoBehaviour{
         score += scorePerNote;
         combo++;
         soundEffect.Play();
-        BS.startstopwatch = false;
+        //BS.startstopwatch = false;
     }
     public void NoteMis(){
         print("Note mis");
-        
+        missedNotes++;
         health -=10;
         combo = 0;
     }
@@ -104,13 +101,46 @@ public class GameManager : MonoBehaviour{
     public void loadscene(int sceneindex)
     {
         songclip.Pause();
-        //SceneManager.UnloadSceneAsync(1);
-        //SceneManager.LoadScene(sceneindex);
 
-        Destroy(GameObject.Find("TransferSong"));
-        SceneManager.LoadScene(sceneindex, LoadSceneMode.Single);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneindex));
-        SceneManager.UnloadSceneAsync(1);
+
+        //Destroy(
+        
+        SceneManager.LoadSceneAsync(sceneindex, LoadSceneMode.Single);
+        //SceneManager.
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneindex));
+        SceneManager.UnloadSceneAsync(2);
        
+    }
+    public void pauseGame()
+    {
+        if (!pauseScreen.activeSelf && Time.timeScale == 1f)
+        {
+            buttonToPause.SetActive(false);
+            pauseScreen.SetActive(true);
+            AudioListener.pause = true;
+            Time.timeScale = 0f;
+        }
+        else if (pauseScreen.activeSelf && Time.timeScale == 0f)
+        {
+            buttonToPause.SetActive(true);
+            pauseScreen.SetActive(false);
+            AudioListener.pause = false;
+            Time.timeScale = 1f;
+        }
+    }
+    private void endGame()
+    {
+        print("endgame");
+        // save score
+
+        theMusic.name = "SongResults";
+        Music TSM = theMusic.GetComponent<Music>();
+        TSM.played = true;
+        TSM.score = score;
+        TSM.missedNotes = missedNotes;
+        TSM.hitNotes = hitNotes;
+        
+        //go to menu
+        loadscene(1);
     }
 }

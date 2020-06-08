@@ -10,55 +10,74 @@ public class BeatScroller : MonoBehaviour {
 
     private List<NoteObject> _notes;
     private NoteObject _note;
+    public float _songLength = 0;
+    private int _amountNotes = 0;
 
-    //private float timer;
-    public bool startstopwatch = false;
-
+    [SerializeField] private Material _red, _orange, _yellow, _green, _blue, _violet, _indigo;
+   
     // Start is called before the first frame update
     void Start(){
-        //_beatTempo = _beatTempo / 60f;
+        print("constructor BeatScroller");
         _notes = new List<NoteObject>();
-        _note = Resources.Load<NoteObject>("Prefabs/Note");
+        _note = Resources.Load<NoteObject>("Prefabs/NoteGreen");
 
-        //timer = 0;
-        //SpawnNote(-2);
-        //SpawnNote(-4);
-        //measure time untill hit
+        _beatTempo = GameObject.Find("TransferSong").GetComponent<Music>().bpm;
+        _noteSpeed = GameObject.Find("TransferSong").GetComponent<Music>().speed;
+        _songLength = GameObject.Find("TransferSong").GetComponent<AudioSource>().clip.length;
+        print(_songLength);
+        spawnNotes();
     }
 
-    // Update is called once per frame
     void Update(){
-        /*if (startstopwatch)
-        {
-            TimerPrint();
-        }*/
-       
+        
         if (!_hasStarted){
            
         }else{
-            //for(var i = 0; i< _notes.Count; i++)
-            //{
-                //_notes[i].transform.position -= (new Vector3(0f, 0f, (_beatTempo * _noteSpeed) * Time.deltaTime));
-                this.transform.position -= (new Vector3(0f, 0f, ((_beatTempo/60f) * _noteSpeed) * Time.deltaTime));
-
-        //    }
+            this.transform.position -= (new Vector3(0f, 0f, ((_beatTempo/60f) * _noteSpeed) * Time.deltaTime));
+            
         }
     }
     
     public void setHasStarted(bool hasstarted){
         _hasStarted = hasstarted;
     }
-    /*public void SpawnNote(float xPos)
+
+    void spawnNotes()
     {
-        //xpos moet zijn: -6, -4, -2, 0, 2, 4, 6
-        NoteObject n = Instantiate(_note, new Vector3(xPos, 0, 54), Quaternion.Euler(0, 0, 0));
-        n.gameObject.transform.SetParent(this.gameObject.transform);
-        _notes.Add(n);
-        startstopwatch = true;
+        //need song length - few sec
+
+        //distance between notes
+
+        //change notespeed?
+
+        int[] lanecoords = { -6, -4, -2, 0, 2, 4, 6};
+        Material[] materials = { _red, _orange, _yellow, _green, _blue, _violet, _indigo };
+
+
+        //print("lanecoords 3: "+ lanecoords[3]);
+
+        int zpos = 0;
+        //float songLength = GameManager.instance.songclip.clip.length;
+        float amountnotes = ((_songLength / 60 * (_beatTempo)) / _noteSpeed); // 276 ;
+        print("_beatTempo/60: "+ _beatTempo/60 + " _songLength in min: " + _songLength/60 + " amountNotes: " +amountnotes );
+        //amountNotes = amountnotes.toInt
+        
+        _amountNotes = (int)amountnotes;
+        _amountNotes -= 16;
+
+        for (var i = 0;i < _amountNotes; i++)
+        {
+            //randomize a lane num
+            int lane = Random.Range(0, 6);
+            zpos += 4;
+            
+            var newNote = GameObject.Instantiate(_note, new Vector3(lanecoords[lane], 0.3f, zpos + this.gameObject.transform.position.z), _note.transform.rotation);
+            newNote.transform.parent = this.gameObject.transform;
+
+            //newNote.gameObject.GetComponent<MeshRenderer>().material = materials[lane];
+            var cilinder = newNote.transform.GetChild(0);
+            cilinder.gameObject.GetComponent<MeshRenderer>().material = materials[lane];
+        }
     }
-    public void TimerPrint()
-    {
-        timer += Time.deltaTime;
-        print("Seconds: "+timer % 60);
-    }*/
+    
 }

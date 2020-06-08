@@ -15,6 +15,9 @@ public static class SaveSystem{
     public static SongData loadSongs(){
         string path = Application.persistentDataPath + "/songs.fun";
         if (File.Exists(path)){
+          
+            //File.Delete(path);
+               
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
@@ -27,5 +30,6 @@ public static class SaveSystem{
             return null;
         }
     }
+
 }
 

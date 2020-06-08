@@ -3,22 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NoteObject : MonoBehaviour{
+    private bool pressed = false;
+    public bool canBePressed = false;
 
-    void Update()
+
+    public void OnMouseDown()
     {
-
-        // Move the object forward along its z axis 5 unit/second.
-        // 20 units total
-        
-        //if song started
-        //transform.Translate(Vector3.back * Time.deltaTime * 5);
-
-        
+        print("MouseDown");
+        //this.transform.Translate(new Vector3(0, -0.1f, 0));
+        pressed = true;
+        if (canBePressed)
+        {
+            this.gameObject.SetActive(false);
+            GameManager.instance.NoteHit();
+        }
     }
+    public void OnMouseUp()
+    {
+        print("MouseUp");
+        //this.transform.Translate(new Vector3(0, 0.1f, 0));
+        pressed = false;
+    }
+
+
+
     private void OnTriggerEnter(Collider other){
+        if (other.tag == "Activator")
+        {
+            canBePressed = true;
+        }
         if (other.tag == "Missed"){
             gameObject.SetActive(false);
             GameManager.instance.NoteMis();
         }
-    }   
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Activator")
+        {
+            canBePressed = false;
+        }
+    }
 }
