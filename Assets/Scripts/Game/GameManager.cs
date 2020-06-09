@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour{
         songclip.Pause();
 
 
-        //Destroy(
+        //Destroy(theMusic);
         
         SceneManager.LoadSceneAsync(sceneindex, LoadSceneMode.Single);
         //SceneManager.
