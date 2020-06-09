@@ -65,13 +65,15 @@ public class BeatScroller : MonoBehaviour {
         _amountNotes = (int)amountnotes;
         _amountNotes -= 16;
 
+
+        //space betwee
         for (var i = 0;i < _amountNotes; i++)
         {
             //randomize a lane num
             int lane = Random.Range(0, 6);
             zpos += 4;
             
-            var newNote = GameObject.Instantiate(_note, new Vector3(lanecoords[lane], 0.3f, zpos + this.gameObject.transform.position.z), _note.transform.rotation);
+            var newNote = GameObject.Instantiate(_note, new Vector3(lanecoords[lane], 0.3f, (zpos + this.gameObject.transform.position.z)*_noteSpeed), _note.transform.rotation);
             newNote.transform.parent = this.gameObject.transform;
 
             //newNote.gameObject.GetComponent<MeshRenderer>().material = materials[lane];

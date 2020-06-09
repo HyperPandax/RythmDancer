@@ -87,7 +87,7 @@ public class Controller : MonoBehaviour
         hit  = songbutton.transform.GetChild(5).GetComponentInChildren<Text>();
         missed = songbutton.transform.GetChild(6).GetComponentInChildren<Text>();
 
-        songnum.text = "songNum: " + songNum;
+       
 
 
         AudioSource audio = songbutton.GetComponent<AudioSource>();
@@ -96,7 +96,9 @@ public class Controller : MonoBehaviour
         title.text = songName;
 
         BPM = UniBpmAnalyzer.AnalyzeBpm(audio.clip);
-        bpm.text = "bpm: " + BPM;
+        bpm.text = /*"bpm: " +*/ BPM.ToString();
+        songNum++;
+        songnum.text = songNum.ToString();
 
         if (allImportedSongNames.Contains(title.text))
         {
@@ -159,28 +161,33 @@ public class Controller : MonoBehaviour
             songNum++;
             songnum.text = songNum.ToString();
 
-            /*if (loadInSaveFile.playedSongs.Contains(songNum)){
-                for(int i = 0; i< loadInSaveFile.playedSongs.Count; i++){
-                    if(loadInSaveFile.playedSongs[i] == songNum){
-                        played.text = "true";
-                        score.text = "Score: " + loadInSaveFile.score[i];
-                        hit.text = "Hit: " + loadInSaveFile.hitNotes[i];
-                        missed.text = "Mis: " + loadInSaveFile.missedNotes[i];
-                    }
-                }
-                
-            }
-            else
-            {    
-                played.text = "false";
-                score.text = "Score: " + loadInSaveFile.score[songNum];
-                hit.text = "Hit: " + loadInSaveFile.hitNotes[songNum];
-                missed.text = "Mis: " + loadInSaveFile.missedNotes[songNum];
-                   
-                
-            }*/
             
-            if (allImportedSongNames.Contains(title.text)){
+            played.text = "";
+            score.text = "";
+            hit.text = "";
+            missed.text = "";
+        /*if (loadInSaveFile.playedSongs.Contains(songNum)){
+            for(int i = 0; i< loadInSaveFile.playedSongs.Count; i++){
+                if(loadInSaveFile.playedSongs[i] == songNum){
+                    played.text = "true";
+                    score.text = "Score: " + loadInSaveFile.score[i];
+                    hit.text = "Hit: " + loadInSaveFile.hitNotes[i];
+                    missed.text = "Mis: " + loadInSaveFile.missedNotes[i];
+                }
+            }
+
+        }
+        else
+        {    
+            played.text = "false";
+            score.text = "Score: " + loadInSaveFile.score[songNum];
+            hit.text = "Hit: " + loadInSaveFile.hitNotes[songNum];
+            missed.text = "Mis: " + loadInSaveFile.missedNotes[songNum];
+
+
+        }*/
+
+        if (allImportedSongNames.Contains(title.text)){
                     //print("double " + title.text);
             }
             else{

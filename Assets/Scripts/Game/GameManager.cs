@@ -77,6 +77,17 @@ public class GameManager : MonoBehaviour{
         {
             endGame();
         }
+        if(health < 100)
+        {
+            if (combo == 10) { health += 5; }
+            if (combo == 20) { health += 10; }
+            if (combo == 30) { health += 15; }
+            if (combo == 40) { health += 20; }
+            if (combo == 50) { health += 25; }
+            if (combo == 100) { health += 50; }
+
+        }
+       
 
         comboText.text = ("Combo: " + combo);
         scoreText.text = ("Score: " + score);
